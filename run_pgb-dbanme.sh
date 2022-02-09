@@ -1,6 +1,19 @@
 #!/bin/bash
+# Overide RUN_DATE pass in date as a parameter YYYY-MM-DD ie 2022-02-02
+# You can only go back 3 days for RDS logs
 
-RUN_DATE=`date --date="1 days ago" +'%Y-%m-%d'`
+date=$1
+
+if [ -z "$date" ]
+then
+      echo "no overide date parameter passed"
+      RUN_DATE=`date --date="1 days ago" +'%Y-%m-%d'`
+else
+      echo $date "is and overide"
+      RUN_DATE=$date
+fi
+
+#RUN_DATE=`date --date="1 days ago" +'%Y-%m-%d'`
 DB_INSTANCE='instance-name' #like db-ecs-env etc
 BUCKET_NAME='my-bucket-name' # FQDN name of bucket like pgbadger-db.name.com
 ENV=`stg` #ENV will also be the folder (key) name in S3
